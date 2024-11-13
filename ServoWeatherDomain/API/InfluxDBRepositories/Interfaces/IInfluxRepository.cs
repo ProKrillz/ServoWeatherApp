@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServoWeatherDomain.API.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,8 @@ namespace ServoWeatherDomain.API.InfluxDBRepositories.Interfaces
 {
     public interface IInfluxRepository
     {
+        Task WriteTelemetry(Telemetry telemetry);
+
+        Task<List<Telemetry>> QuereDB();
     }
 }

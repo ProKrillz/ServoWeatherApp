@@ -8,5 +8,6 @@ namespace ServoWeatherDomain.API.MqttRepositories.Interfaces
 {
     public interface IPublishRepository
     {
+        Task Publish_Application_Message(string number);
     }
 }
