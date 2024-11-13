@@ -12,7 +12,7 @@ namespace ServoWeatherDomain.API.MqttRepositories
 {
     public class PublishRepository : IPublishRepository
     {
-        public async Task Publish_Application_Message(string number)
+        public async Task Publish_Application_Message(string input)
         {
             /*number
              * This sample pushes a simple application message including a topic and a payload.
@@ -38,7 +38,7 @@ namespace ServoWeatherDomain.API.MqttRepositories
 
                 var applicationMessage = new MqttApplicationMessageBuilder()
                     .WithTopic("servo/rotate")
-                    .WithPayload(number)
+                    .WithPayload(input)
                     .Build();
 
                 await mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
