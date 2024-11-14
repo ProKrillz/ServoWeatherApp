@@ -10,7 +10,8 @@ namespace ServoWeatherApi.Controllers
         private readonly ILogger<MqttController> _logger = _logger;
 
         private readonly IPublishRepository _repository = _repository;
-        
+
+        [HttpPost("activate/{status}")]
         public async Task ActivateServoAsync(string status)
         {
             await _repository.PublishApplicationMessageAsync(status);
