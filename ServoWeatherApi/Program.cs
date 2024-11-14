@@ -1,4 +1,7 @@
-using ServoWeatherApi.Models;
+using ServoWeatherDomain.API.InfluxDBRepositories;
+using ServoWeatherDomain.API.InfluxDBRepositories.Interfaces;
+using ServoWeatherDomain.API.MqttRepositories;
+using ServoWeatherDomain.API.MqttRepositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var test = builder.Configuration.GetSection("BrokerHostSettings");
+//builder.Services.Configure<BrokerHostSettings>(builder.Configuration.GetSection("BrokerHostSettings"));
 
-builder.Services.Configure<BrokerHostSettings>(builder.Configuration.GetSection("BrokerHostSettings"));
+builder.Services.AddHostedService<WorkerRepository>();
+builder.Services.AddSingleton<IPublishRepository, PublishRepository>();
+builder.Services.AddSingleton<IInfluxRepository, InfluxRepository>();
 
 var app = builder.Build();
 

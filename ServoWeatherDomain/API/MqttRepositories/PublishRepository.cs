@@ -4,15 +4,13 @@ using MQTTnet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ServoWeatherDomain.API.MqttRepositories.Interfaces;
 
 namespace ServoWeatherDomain.API.MqttRepositories
 {
     public class PublishRepository : IPublishRepository
     {
-        public async Task Publish_Application_Message(string input)
+        public async Task PublishApplicationMessageAsync(string input)
         {
             /*number
              * This sample pushes a simple application message including a topic and a payload.
