@@ -23,11 +23,18 @@ namespace ServoWeatherApp
 
             builder.Services.AddSingleton<ITelemetryService, TelemetryService>();
 
-            builder.Services.AddSingleton<TemperaturePage>();
-            builder.Services.AddSingleton<TemperaturePageViewModel>();
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainPageViewModel>();
 
-            builder.Services.AddSingleton<HumidityPage>();
-            builder.Services.AddSingleton<HumidityPageViewModel>();
+
+            builder.Services.AddTransient<TemperaturePage>();
+            builder.Services.AddTransient<TemperaturePageViewModel>();
+
+            builder.Services.AddTransient<HumidityPage>();
+            builder.Services.AddTransient<HumidityPageViewModel>();
+
+            builder.Services.AddTransient<ServoMotorPage>();
+            builder.Services.AddTransient<ServoMotorPageViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

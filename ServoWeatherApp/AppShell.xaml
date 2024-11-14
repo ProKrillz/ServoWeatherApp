@@ -6,14 +6,10 @@
     xmlns:local="clr-namespace:ServoWeatherApp"
     xmlns:views="clr-namespace:ServoWeatherApp.Views"
     Title="ServoWeatherApp"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-    <ShellContent
-        Title="Temperature"
-        ContentTemplate="{DataTemplate views:TemperaturePage}"
-        Route="TemperaturePage" />
 </Shell>

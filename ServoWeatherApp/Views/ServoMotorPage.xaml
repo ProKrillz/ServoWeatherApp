@@ -9,9 +9,15 @@
     x:DataType="vm:ServoMotorPageViewModel">
 
     <VerticalStackLayout>
-        <Label
+        <Button
             HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
+            MinimumHeightRequest="100"
+            MinimumWidthRequest="300"
+            Text="Turn On" />
+        <Button
+            HorizontalOptions="Center"
+            MinimumHeightRequest="100"
+            MinimumWidthRequest="300"
+            Text="Turn Off" />
     </VerticalStackLayout>
 </ContentPage>
