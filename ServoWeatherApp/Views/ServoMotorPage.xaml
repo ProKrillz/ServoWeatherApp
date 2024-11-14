@@ -9,12 +9,19 @@
     x:DataType="vm:ServoMotorPageViewModel">
 
     <VerticalStackLayout>
+        <Label
+            FontSize="20"
+            HorizontalOptions="Center"
+            MinimumWidthRequest="150"
+            Text="SERVO MOTOR PLAY" />
         <Button
+            Command="{Binding TurnOnCommand}"
             HorizontalOptions="Center"
             MinimumHeightRequest="100"
             MinimumWidthRequest="300"
             Text="Turn On" />
         <Button
+            Command="{Binding TurnOffCommand}"
             HorizontalOptions="Center"
             MinimumHeightRequest="100"
             MinimumWidthRequest="300"

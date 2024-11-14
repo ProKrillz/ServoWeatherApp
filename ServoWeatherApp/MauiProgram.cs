@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using ServoWeatherApp.ViewModels;
 using ServoWeatherApp.Views;
+using ServoWeatherDomain.GenericRepositories;
 using ServoWeatherService.Services;
 using ServoWeatherService.Services.Interfaces;
 using Syncfusion.Maui.Core.Hosting;
@@ -21,7 +22,9 @@ namespace ServoWeatherApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            
             builder.Services.AddSingleton<ITelemetryService, TelemetryService>();
+            builder.Services.AddSingleton<IGenericRepository, GenericRepository>();
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();

@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Graphics.Text;
+using ServoWeatherApp.Mapping;
 using ServoWeatherApp.Models;
 using ServoWeatherService.Services.Interfaces;
 using System.Collections.ObjectModel;
@@ -13,12 +14,13 @@ public partial class TemperaturePageViewModel : BaseViewModel
     public TemperaturePageViewModel(ITelemetryService service)
     {
         _service = service;
+        GetAllTemperatureAsync().Wait();
     }
 
-    public ObservableCollection<TelemetryModel> Telemetry { get; set; }
+    public ObservableCollection<TelemetryModel> telemetry { get; set; }
 
     [RelayCommand]
-    public async Task GetAllHumidityAsync()
+    public async Task GetAllTemperatureAsync()
     {
         if (IsBusy)
             return;
@@ -28,15 +30,14 @@ public partial class TemperaturePageViewModel : BaseViewModel
 
             var items = await _service.GetItemsAsync(); ;
             List<int> tal = new();
-            if (Telemetry.Count != 0)
-                Telemetry.Clear();
+            if (telemetry.Count != 0)
+                telemetry.Clear();
 
             foreach (var item in items)
-                Telemetry.Add(item);
+                telemetry.Add(item.ConvertFromEntityToModel());
         }
         catch (Exception ex)
         {
-
             throw;
         }
         finally

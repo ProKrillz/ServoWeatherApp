@@ -3,22 +3,19 @@ using ServoWeatherService.Services.Interfaces;
 
 namespace ServoWeatherApp.ViewModels;
 
-public partial class ServoMotorPageViewModel : BaseViewModel
+public partial class ServoMotorPageViewModel(ITelemetryService _service) : BaseViewModel
 {
-	private readonly ITelemetryService _service;
-
-    public ServoMotorPageViewModel(ITelemetryService service)
+    //Turn on the servo motor 180*.
+    [RelayCommand]
+    public void TurnOn()
     {
-        _service = service;
+        _service.ServoMotor("On");
     }
 
-    /// <summary>
-    /// Styring af servo motor med en input ( "On" or "Off" ).
-    /// </summary>
-    /// <param name="input"></param>
+    //Turn Off the servo motor 180*.
     [RelayCommand]
-    public void ServoControlAsync(string input)
+    public void TurnOff()
     {
-        _service.ServoMotor(input);
+        _service.ServoMotor("Off");
     }
 }

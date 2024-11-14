@@ -40,7 +40,7 @@ namespace ServoWeatherDomain.API.InfluxDBRepositories
                 {
                     Humidity = Convert.ToDouble(row[0]),
                     Temperature = Convert.ToDouble(row[1]),
-                    Time = DateTime.Parse(row[2].ToString()).ToLocalTime(), // show in local time
+                    LocalTime = DateTime.Parse(row[2].ToString()).ToLocalTime(), // show in local time
                 });
             }
             return list;
