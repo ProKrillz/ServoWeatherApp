@@ -1,6 +1,7 @@
 ﻿using InfluxDB3.Client;
 using InfluxDB3.Client.Write;
 using ServoWeatherDomain.API.Entities;
+using ServoWeatherDomain.API.InfluxDBRepositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ServoWeatherDomain.API.InfluxDBRepositories
 {
-    public class InfluxRepository
+    public class InfluxRepository : IInfluxRepository
     {
         const string _hostUrl = "https://us-east-1-1.aws.cloud2.influxdata.com";
         const string? _database = "Telemetry";
