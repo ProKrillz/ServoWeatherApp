@@ -4,12 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ServoWeatherApp"
-    Shell.FlyoutBehavior="Disabled"
-    Title="ServoWeatherApp">
+    xmlns:views="clr-namespace:ServoWeatherApp.Views"
+    Title="ServoWeatherApp"
+    Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
+    <ShellContent
+        Title="Temperature"
+        ContentTemplate="{DataTemplate views:TemperaturePage}"
+        Route="TemperaturePage" />
 </Shell>

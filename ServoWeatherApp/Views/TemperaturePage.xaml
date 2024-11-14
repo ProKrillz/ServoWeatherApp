@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ServoWeatherApp.Views.TemperaturePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:models="clr-namespace:ServoWeatherApp.Models"
+    xmlns:vm="clr-namespace:ServoWeatherApp.ViewModels"
+    Title="TemperaturePage"
+    x:DataType="vm:TemperaturePageViewModel">
+
+
+    <VerticalStackLayout>
+        <chart:SfCartesianChart>
+            <chart:SfCartesianChart.XAxes>
+                <chart:CategoryAxis>
+                    <chart:CategoryAxis.Title>
+                        <chart:ChartAxisTitle Text="LocalTime" />
+                    </chart:CategoryAxis.Title>
+                </chart:CategoryAxis>
+            </chart:SfCartesianChart.XAxes>
+            <chart:SfCartesianChart.YAxes>
+                <chart:NumericalAxis>
+                    <chart:NumericalAxis.Title>
+                        <chart:ChartAxisTitle Text="Tempetarure(c*)" />
+                    </chart:NumericalAxis.Title>
+                </chart:NumericalAxis>
+            </chart:SfCartesianChart.YAxes>
+
+            <chart:ColumnSeries
+                ItemsSource="{Binding telemetry}"
+                XBindingPath="LocalTime"
+                YBindingPath="Temperature" />
+        </chart:SfCartesianChart>
+    </VerticalStackLayout>
+</ContentPage>
