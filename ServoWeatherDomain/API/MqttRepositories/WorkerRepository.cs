@@ -1,18 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
 using MQTTnet.Client;
 using MQTTnet.Extensions.TopicTemplate;
-using MQTTnet.Formatter;
 using MQTTnet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ServoWeatherDomain.API.InfluxDBRepositories.Interfaces;
-using System.ComponentModel;
 using System.Text.Json;
 using ServoWeatherDomain.API.Entities;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace ServoWeatherDomain.API.MqttRepositories
 {
@@ -20,43 +16,45 @@ namespace ServoWeatherDomain.API.MqttRepositories
     {
         static readonly MqttTopicTemplate sampleTemplate = new("home/temp");
 
+        private readonly ILogger<WorkerRepository> _logger;
+        
         private readonly  IInfluxRepository _influxDBService;
 
-        private readonly ILogger<WorkerRepository> _logger;
+        private readonly IConfiguration _config;
 
-        public WorkerRepository(IInfluxRepository iInfluxDBService, ILogger<WorkerRepository> logger)
+        private readonly IMqttClient _mqttClient;
+        
+        private readonly MqttClientOptionsBuilder _mqttClientOptionsBuilder;
+
+
+        public WorkerRepository(IInfluxRepository iInfluxDBService, IMqttClient mqttClient, MqttClientOptionsBuilder mqttClientOptions, ILogger<WorkerRepository> logger)
         {
             _influxDBService = iInfluxDBService;
             _logger = logger;
+            _mqttClient = mqttClient;
+            _mqttClientOptionsBuilder = mqttClientOptions;
+            
+            _config = new ConfigurationBuilder()
+                .AddUserSecrets(Assembly.GetExecutingAssembly())
+                .Build();
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken) { } //create more instance
 
         public async override Task StartAsync(CancellationToken stoppingToken) //creates one instance
         {
-            var mqttFactory = new MqttFactory();
-
-            IMqttClient mqttClient = mqttFactory.CreateMqttClient();
-
-            var mqttClientOptions = new MqttClientOptionsBuilder()
-                 .WithTcpServer("49987f455bc94d2183a5075a9fa78344.s1.eu.hivemq.cloud", 8883)
-                 .WithCredentials("MQTT.fx", "linkin")
-                 .WithProtocolVersion(MqttProtocolVersion.V311)
-                 .WithTlsOptions(x => x.UseTls())
-                 .Build();
-
-            mqttClient.ApplicationMessageReceivedAsync += e =>
+            _mqttClient.ApplicationMessageReceivedAsync += e =>
             {
                 Telemetry? found = JsonSerializer.Deserialize<Telemetry>(Encoding.Default.GetString(e.ApplicationMessage.PayloadSegment));
                 _logger.LogInformation("random");
                 _influxDBService.WriteTelemetry(found);
                 return Task.CompletedTask;
             };
-            await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+            await _mqttClient.ConnectAsync(_mqttClientOptionsBuilder.WithCredentials(_config["DeivceOneUsername"], _config["DeivceOnePassword"]).Build(), CancellationToken.None);
 
-            var mqttSubscribeOptions = mqttFactory.CreateSubscribeOptionsBuilder().WithTopicTemplate(sampleTemplate).Build();
+            var mqttSubscribeOptions = new MqttClientSubscribeOptionsBuilder().WithTopicTemplate(sampleTemplate).Build();
 
-            await mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
+            await _mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
         }
     }
 }
