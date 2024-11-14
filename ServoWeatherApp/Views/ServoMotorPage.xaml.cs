@@ -1,16 +1,15 @@
-
 using ServoWeatherApp.ViewModels;
 
 namespace ServoWeatherApp.Views;
 
-public partial class TemperaturePage : ContentPage
+public partial class ServoMotorPage : ContentPage
 {
-	TemperaturePageViewModel _vm;
-	public TemperaturePage(TemperaturePageViewModel vm)
+	ServoMotorPageViewModel _vm;
+	public ServoMotorPage(ServoMotorPageViewModel vm)
 	{
 		InitializeComponent();
 		_vm = vm;
 		BindingContext = _vm;
-		
+
 	}
 }

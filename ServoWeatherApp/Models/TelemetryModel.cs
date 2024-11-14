@@ -10,6 +10,6 @@ namespace ServoWeatherApp.Models
     {
         public double Temperature { get; set; }
         public double Humidity { get; set; }
-        public DateTime Time { get; set; }
+        public DateTime LocalTime { get; set; }
     }
 }

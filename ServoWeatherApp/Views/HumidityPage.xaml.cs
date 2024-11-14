@@ -1,16 +1,14 @@
-
 using ServoWeatherApp.ViewModels;
 
 namespace ServoWeatherApp.Views;
 
-public partial class TemperaturePage : ContentPage
+public partial class HumidityPage : ContentPage
 {
-	TemperaturePageViewModel _vm;
-	public TemperaturePage(TemperaturePageViewModel vm)
+	HumidityPageViewModel _vm;
+	public HumidityPage(HumidityPageViewModel vm)
 	{
 		InitializeComponent();
 		_vm = vm;
 		BindingContext = _vm;
-		
 	}
 }

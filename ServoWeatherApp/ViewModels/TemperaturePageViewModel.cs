@@ -1,21 +1,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Maui.Graphics.Text;
 using ServoWeatherApp.Models;
+using System.Collections.ObjectModel;
 
 namespace ServoWeatherApp.ViewModels;
 
-public class TemperaturePageViewModel : ObservableObject
+public partial class TemperaturePageViewModel : BaseViewModel
 {
-    public List<TelemetryModel> telemetry { get; set; }
+    public ObservableCollection<TelemetryModel> telemetry { get; set; }
 
     public TemperaturePageViewModel()
     {
-        telemetry = new List<TelemetryModel>()
-        {
-            new TelemetryModel { Humidity = 40.5 , Temperature = 45.3},
-            new TelemetryModel { Humidity = 45.5 , Temperature = 46.3},
-            new TelemetryModel { Humidity = 35.5 , Temperature = 47.3},
-            new TelemetryModel { Humidity = 37.5 , Temperature = 43.3},
-            new TelemetryModel { Humidity = 50.5 , Temperature = 33.3}
-        };
+        
     }
 }
