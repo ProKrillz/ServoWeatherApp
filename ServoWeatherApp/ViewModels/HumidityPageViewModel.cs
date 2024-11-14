@@ -27,7 +27,7 @@ public partial class HumidityPageViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            var items = await _service.GetItemsAsync(); ;
+            var items = await _service.GetItemsAsync(1); ;
             List<int> tal = new();
             if (telemetry.Count != 0)
                 telemetry.Clear();

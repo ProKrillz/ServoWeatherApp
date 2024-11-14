@@ -18,6 +18,6 @@ namespace ServoWeatherService.Constants
         //public static string BaseUrl = "https://xxx.euw.devtunnels.ms"; // Thomas
 
         #endregion
-        public static string Endpoint = "todoitems";
+        public static string Endpoint = "GetTelemtry";
     }
 }
