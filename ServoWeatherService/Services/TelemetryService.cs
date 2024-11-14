@@ -1,14 +1,7 @@
-﻿using Apache.Arrow;
-using Grpc.Core;
-using Microsoft.VisualBasic;
-using ServoWeatherDomain.API.Entities;
+﻿using ServoWeatherDomain.API.Entities;
 using ServoWeatherDomain.GenericRepositories;
 using ServoWeatherService.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ServoWeatherService.Services
 {
