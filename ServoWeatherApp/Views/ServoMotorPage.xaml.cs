@@ -8,6 +8,5 @@ public partial class ServoMotorPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
-
 	}
 }

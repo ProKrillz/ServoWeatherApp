@@ -20,5 +20,6 @@ namespace ServoWeatherService.Constants
 
         #endregion
         public static string Endpoint = "GetTelemtry";
+        public static string EndpointServo = "api/Mqtt/activate";
     }
 }

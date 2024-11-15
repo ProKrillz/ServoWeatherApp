@@ -49,7 +49,7 @@ namespace ServoWeatherService.Services
 
         public async Task ServoMotor(string input)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}" };
+            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.EndpointServo}/{input}" };
             await _service.PostAsync(builder.Uri, input);
 
         }

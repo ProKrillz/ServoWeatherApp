@@ -71,7 +71,6 @@ namespace ServoWeatherDomain.GenericRepositories
             {
                 Debug.WriteLine(@"----- ERROR {0}", ex.Message);
             }
-            Debug.WriteLine(@"----- Item NOT created!");
             return false;
         }
 
