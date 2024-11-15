@@ -10,9 +10,10 @@ namespace ServoWeatherService.Constants
     {
         #region Brian Tunnel
 
-        public static string BaseUrl = "https://kjthpxd4-7260.euw.devtunnels.ms"; // Brian
+        public static string BaseUrl = "https://cb0q7p4s-7260.euw.devtunnels.ms"; // Brian
 
         #endregion
+
         #region Thomas Tunnel
 
         //public static string BaseUrl = "https://xxx.euw.devtunnels.ms"; // Thomas

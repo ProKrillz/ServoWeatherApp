@@ -5,9 +5,18 @@ namespace ServoWeatherApp.Views;
 
 public partial class TemperaturePage : ContentPage
 {
+	TemperaturePageViewModel _vm;
 	public TemperaturePage(TemperaturePageViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext = vm;
+		_vm = vm;
+		BindingContext = _vm;
 	}
+
+    protected override void OnAppearing()
+	{
+        base.OnAppearing();
+        _vm.GetAllTemperatureCommand.Execute(null);
+	}
+
 }
