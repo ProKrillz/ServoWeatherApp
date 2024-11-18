@@ -2,51 +2,49 @@
 using InfluxDB3.Client.Write;
 using ServoWeatherDomain.API.Entities;
 using ServoWeatherDomain.API.InfluxDBRepositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ServoWeatherDomain.API.InfluxDBRepositories
+namespace ServoWeatherDomain.API.InfluxDBRepositories;
+
+public class InfluxRepository(InfluxDBClient _influxDBClient) : IInfluxRepository
 {
-    public class InfluxRepository : IInfluxRepository
+    private readonly InfluxDBClient _influxDBClient = _influxDBClient;
+
+    const string hostUrl = "https://us-east-1-1.aws.cloud2.influxdata.com";
+    const string? database = "Telemetry";
+    const string? authToken = "HjLJOoBv8IWFQ-eRVUpPspWLNWb_BQvhlDMqdYnWTfa33V2sViEanGGiwWa1UhQqkf3gDAzgAcNNDVKoJs0iBw==";
+    public async Task WriteTelemetry(Telemetry telemetry)
     {
-        const string _hostUrl = "https://us-east-1-1.aws.cloud2.influxdata.com";
-        const string? _database = "Telemetry";
-        const string? _authToken = "HjLJOoBv8IWFQ-eRVUpPspWLNWb_BQvhlDMqdYnWTfa33V2sViEanGGiwWa1UhQqkf3gDAzgAcNNDVKoJs0iBw==";
+        using var client = _influxDBClient;
 
-        public async Task WriteTelemetry(Telemetry telemetry)
-        {
-
-            using var client = new InfluxDBClient(_hostUrl, token: _authToken, database: _database);
-
-            var point = PointData.Measurement("TemperatureData")
-                .SetField("Temperature", telemetry.Temperature)
-                .SetField("Humidity", telemetry.Humidity)
-                .SetTimestamp(DateTime.UtcNow.AddSeconds(-10));
-            await client.WritePointAsync(point: point);
-        }
-        public async Task<List<Telemetry>> QuereDB()
-        {
-            const string quereAll = "SELECT * FROM 'TemperatureData'";
-
-            List<Telemetry> list = new List<Telemetry>();
-
-            using var client = new InfluxDBClient(_hostUrl, token: _authToken, database: _database);
-
-            await foreach (var row in client.Query(quereAll))
-            {
-                list.Add(new Telemetry()
-                {
-                    Humidity = Convert.ToDouble(row[0]),
-                    Temperature = Convert.ToDouble(row[1]),
-                    LocalTime = DateTime.Parse(row[2].ToString()).ToLocalTime(), // show in local time
-                });
-            }
-            return list;
-
-
-        }
+        PointData point = PointData.Measurement("TemperatureData")
+            .SetField("Temperature", telemetry.Temperature)
+            .SetField("Humidity", telemetry.Humidity)
+            .SetTimestamp(DateTime.UtcNow.AddSeconds(-10));
+        await client.WritePointAsync(point: point);
     }
+    public async Task<List<Telemetry>> QuereDbAsync(string option)
+    {
+        string quere = option switch
+        {
+            "All" => "SELECT * FROM 'TemperatureData' WHERE 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL",
+            "LastHour" => "SELECT * FROM 'TemperatureData' WHERE time >= now() - interval '1 hour' AND 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL",
+            "Today" => "SELECT * FROM 'TemperatureData' WHERE time >= today() AND 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL"
+        };
+     
+        List<Telemetry> list = new List<Telemetry>();
+
+        using var client = new InfluxDBClient(hostUrl, token: authToken, database: database);
+
+        await foreach (var row in client.Query(quere))
+        {
+            list.Add(new Telemetry()
+            {
+                Humidity = Convert.ToDouble(row[0]),
+                Temperature = Convert.ToDouble(row[1]),
+                LocalTime = DateTime.Parse(row[2].ToString()).ToLocalTime(), // show in local time
+            });
+        }
+        return list;
+    }
+ 
 }

@@ -1,25 +1,19 @@
 using CommunityToolkit.Mvvm.Input;
 using ServoWeatherApp.Mapping;
 using ServoWeatherApp.Models;
+using ServoWeatherDomain.API.Entities;
 using ServoWeatherService.Services.Interfaces;
 using System.Collections.ObjectModel;
 
 namespace ServoWeatherApp.ViewModels;
 
-public partial class HumidityPageViewModel : BaseViewModel
+public partial class HumidityPageViewModel(ITelemetryService _service) : BaseViewModel
 {
-    private readonly ITelemetryService _service;
 
-    public HumidityPageViewModel(ITelemetryService service)
-    {
-        _service = service;
-        GetAllHumidityAsync().Wait();
-    }
-
-    public ObservableCollection<TelemetryModel> telemetry { get; set; }
+    public ObservableCollection<TelemetryModel> telemetry { get; set; } = []; // Its lowercase because of MVVM nugget.
 
     [RelayCommand]
-    public async Task GetAllHumidityAsync()
+    public async Task GetAllHumidity()
     {
         if (IsBusy)
             return;
@@ -27,9 +21,9 @@ public partial class HumidityPageViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            var items = await _service.GetItemsAsync(); ;
-            List<int> tal = new();
-            if (telemetry.Count != 0)
+            List<Telemetry> items = [];
+            items = await _service.GetItemsAsync("All");
+            if (telemetry.Any())
                 telemetry.Clear();
 
             foreach (var item in items)

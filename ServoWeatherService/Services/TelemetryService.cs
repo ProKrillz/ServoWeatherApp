@@ -11,9 +11,9 @@ namespace ServoWeatherService.Services
 
         #region TELEMETRY CRUD
 
-        public async Task<List<Telemetry>> GetItemsAsync()
+        public async Task<List<Telemetry>> GetItemsAsync(string input)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = Constants.Constants.Endpoint };
+            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{input}" };
             return await _service.GetAsync<List<Telemetry>>(builder.Uri);
         }
 
@@ -49,7 +49,7 @@ namespace ServoWeatherService.Services
 
         public async Task ServoMotor(string input)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}" };
+            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.EndpointServo}/{input}" };
             await _service.PostAsync(builder.Uri, input);
 
         }

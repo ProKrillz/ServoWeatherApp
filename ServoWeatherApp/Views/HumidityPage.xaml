@@ -9,25 +9,24 @@
     Title="HumidityPage"
     x:DataType="vm:HumidityPageViewModel">
 
-    <VerticalStackLayout>
 
-        <chart:SfCartesianChart Title="Humidity">
 
-            <chart:SfCartesianChart.XAxes>
-                <chart:DateTimeAxis />
-            </chart:SfCartesianChart.XAxes>
+    <chart:SfCartesianChart Title="Humidity">
 
-            <chart:SfCartesianChart.YAxes>
-                <chart:NumericalAxis />
-            </chart:SfCartesianChart.YAxes>
+        <chart:SfCartesianChart.XAxes>
+            <chart:DateTimeAxis />
+        </chart:SfCartesianChart.XAxes>
 
-            <chart:SplineSeries
-                ItemsSource="{Binding telemetry}"
-                ShowDataLabels="True"
-                XBindingPath="LocalTime"
-                YBindingPath="Humidity" />
+        <chart:SfCartesianChart.YAxes>
+            <chart:NumericalAxis Interval="5" />
+        </chart:SfCartesianChart.YAxes>
 
-        </chart:SfCartesianChart>
-    </VerticalStackLayout>
+        <chart:SplineSeries
+            ItemsSource="{Binding telemetry}"
+            ShowDataLabels="True"
+            XBindingPath="LocalTime"
+            YBindingPath="Humidity" />
+
+    </chart:SfCartesianChart>
 
 </ContentPage>

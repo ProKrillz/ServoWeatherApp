@@ -9,13 +9,13 @@ public partial class ServoMotorPageViewModel(ITelemetryService _service) : BaseV
     [RelayCommand]
     public void TurnOn()
     {
-        _service.ServoMotor("On");
+        _service.ServoMotor("on");
     }
 
     //Turn Off the servo motor 180*.
     [RelayCommand]
     public void TurnOff()
     {
-        _service.ServoMotor("Off");
+        _service.ServoMotor("off");
     }
 }

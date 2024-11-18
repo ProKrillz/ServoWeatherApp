@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -70,7 +71,6 @@ namespace ServoWeatherDomain.GenericRepositories
             {
                 Debug.WriteLine(@"----- ERROR {0}", ex.Message);
             }
-            Debug.WriteLine(@"----- Item NOT created!");
             return false;
         }
 

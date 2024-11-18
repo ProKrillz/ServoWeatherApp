@@ -1,3 +1,7 @@
+using InfluxDB3.Client;
+using MQTTnet;
+using MQTTnet.Client;
+using MQTTnet.Formatter;
 using ServoWeatherDomain.API.InfluxDBRepositories;
 using ServoWeatherDomain.API.InfluxDBRepositories.Interfaces;
 using ServoWeatherDomain.API.MqttRepositories;
@@ -12,7 +16,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.Configure<BrokerHostSettings>(builder.Configuration.GetSection("BrokerHostSettings"));
+IConfigurationSection broker = builder.Configuration.GetSection("BrokerHostSettings");
+IConfigurationSection influx = builder.Configuration.GetSection("InfluxDbSettings");
+
+builder.Services.AddSingleton(new MqttFactory().CreateMqttClient());
+builder.Services.AddSingleton(new MqttClientOptionsBuilder()
+                .WithTcpServer(broker["Host"], Convert.ToInt32(broker["Port"]))
+                .WithProtocolVersion(MqttProtocolVersion.V311)
+                .WithTlsOptions(x => x.UseTls()));
+
+builder.Services.AddSingleton(new InfluxDBClient(influx["Host"], token: influx["Database"], database: influx["AuthToken"]));
 
 builder.Services.AddHostedService<WorkerRepository>();
 builder.Services.AddSingleton<IPublishRepository, PublishRepository>();
