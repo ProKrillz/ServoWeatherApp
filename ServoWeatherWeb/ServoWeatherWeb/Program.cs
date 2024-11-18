@@ -1,3 +1,7 @@
+using MudBlazor.Services;
+using ServoWeatherDomain.GenericRepositories;
+using ServoWeatherService.Services;
+using ServoWeatherService.Services.Interfaces;
 using ServoWeatherWeb.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddMudServices();
+builder.Services.AddScoped<ITelemetryService, TelemetryService>();
+builder.Services.AddScoped<IGenericRepository, GenericRepository>();
 
 var app = builder.Build();
 
