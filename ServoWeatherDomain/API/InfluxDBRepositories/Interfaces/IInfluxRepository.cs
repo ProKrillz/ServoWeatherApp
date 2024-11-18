@@ -10,6 +10,6 @@ public interface IInfluxRepository
     /// </summary>
     /// <param name="option"></param>
     /// <returns></returns>
-    Task<List<Telemetry>> QuereDbAsync(int option);
+    Task<List<Telemetry>> QuereDbAsync(string option);
 
 }

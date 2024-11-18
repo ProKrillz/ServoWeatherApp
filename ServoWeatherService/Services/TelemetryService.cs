@@ -11,7 +11,7 @@ namespace ServoWeatherService.Services
 
         #region TELEMETRY CRUD
 
-        public async Task<List<Telemetry>> GetItemsAsync(int input)
+        public async Task<List<Telemetry>> GetItemsAsync(string input)
         {
             UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{input}" };
             return await _service.GetAsync<List<Telemetry>>(builder.Uri);

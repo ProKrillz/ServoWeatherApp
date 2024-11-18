@@ -22,13 +22,13 @@ public class InfluxRepository(InfluxDBClient _influxDBClient) : IInfluxRepositor
             .SetTimestamp(DateTime.UtcNow.AddSeconds(-10));
         await client.WritePointAsync(point: point);
     }
-    public async Task<List<Telemetry>> QuereDbAsync(int option)
+    public async Task<List<Telemetry>> QuereDbAsync(string option)
     {
         string quere = option switch
         {
-            1 => "SELECT * FROM 'TemperatureData' WHERE 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL",
-            2 => "SELECT * FROM 'TemperatureData' WHERE time >= now() - interval '1 hour' AND 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL",
-            3 => "SELECT * FROM 'TemperatureData' WHERE time >= today() AND 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL"
+            "All" => "SELECT * FROM 'TemperatureData' WHERE 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL",
+            "LastHour" => "SELECT * FROM 'TemperatureData' WHERE time >= now() - interval '1 hour' AND 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL",
+            "Today" => "SELECT * FROM 'TemperatureData' WHERE time >= today() AND 'Humidity' IS NOT NULL OR 'Temperature' IS NOT NULL"
         };
      
         List<Telemetry> list = new List<Telemetry>();

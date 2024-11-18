@@ -9,13 +9,8 @@ using System.Collections.ObjectModel;
 
 namespace ServoWeatherApp.ViewModels;
 
-public partial class TemperaturePageViewModel : BaseViewModel
+public partial class TemperaturePageViewModel(ITelemetryService _service) : BaseViewModel
 {
-    private readonly ITelemetryService _service;
-    public TemperaturePageViewModel(ITelemetryService service)
-    {
-        _service = service;
-    }
 
     public ObservableCollection<TelemetryModel> telemetry { get; set; } = [];
 
@@ -29,7 +24,7 @@ public partial class TemperaturePageViewModel : BaseViewModel
             IsBusy = true;
 
             List<Telemetry> items = [];
-            items = await _service.GetItemsAsync(1);
+            items = await _service.GetItemsAsync("All");
             if (telemetry.Any())
                 telemetry.Clear();
 

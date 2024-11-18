@@ -12,7 +12,7 @@ public partial class HumidityPage : ContentPage
 		BindingContext = _vm;
 	}
 
-    protected virtual async void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         _vm.GetAllHumidityCommand.Execute(null);

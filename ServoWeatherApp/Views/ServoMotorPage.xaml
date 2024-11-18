@@ -8,13 +8,14 @@
     Title="ServoMotorPage"
     x:DataType="vm:ServoMotorPageViewModel">
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="30,0">
         <Label
             FontSize="20"
             HorizontalOptions="Center"
             MinimumWidthRequest="150"
             Text="SERVO MOTOR PLAY" />
         <Button
+            Margin="0,40,0,40"
             Command="{Binding TurnOnCommand}"
             HorizontalOptions="Center"
             MinimumHeightRequest="100"

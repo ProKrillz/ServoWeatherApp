@@ -7,14 +7,8 @@ using System.Collections.ObjectModel;
 
 namespace ServoWeatherApp.ViewModels;
 
-public partial class HumidityPageViewModel : BaseViewModel
+public partial class HumidityPageViewModel(ITelemetryService _service) : BaseViewModel
 {
-    private readonly ITelemetryService _service;
-
-    public HumidityPageViewModel(ITelemetryService service)
-    {
-        _service = service;
-    }
 
     public ObservableCollection<TelemetryModel> telemetry { get; set; } = []; // Its lowercase because of MVVM nugget.
 
@@ -28,7 +22,7 @@ public partial class HumidityPageViewModel : BaseViewModel
             IsBusy = true;
 
             List<Telemetry> items = [];
-            items = await _service.GetItemsAsync(1);
+            items = await _service.GetItemsAsync("All");
             if (telemetry.Any())
                 telemetry.Clear();
 

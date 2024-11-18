@@ -11,7 +11,7 @@ namespace ServoWeatherApi.Controllers
         private readonly IInfluxRepository _repository = _repository;
 
         [HttpGet("/GetTelemtry/{option}")]
-        public async Task<List<Telemetry>>GetTelemetryAsync(int option)
+        public async Task<List<Telemetry>>GetTelemetryAsync(string option)
         {
             return await _repository.QuereDbAsync(option);
         }

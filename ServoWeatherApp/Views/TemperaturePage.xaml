@@ -16,14 +16,20 @@
         </chart:SfCartesianChart.XAxes>
 
         <chart:SfCartesianChart.YAxes>
-            <chart:NumericalAxis />
+            <chart:NumericalAxis Interval="5" />
         </chart:SfCartesianChart.YAxes>
 
-        <chart:SplineSeries
+        <chart:LineSeries
+            ItemsSource="{Binding telemetry}"
+            ShowMarkers="True"
+            XBindingPath="LocalTime"
+            YBindingPath="Temperature" />
+
+        <!--<chart:SplineSeries
             ItemsSource="{Binding telemetry}"
             ShowDataLabels="True"
             XBindingPath="LocalTime"
-            YBindingPath="Temperature" />
+            YBindingPath="Temperature" />-->
 
     </chart:SfCartesianChart>
 </ContentPage>
