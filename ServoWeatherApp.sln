@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServoWeatherDomain", "Servo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServoWeatherService", "ServoWeatherService\ServoWeatherService.csproj", "{2808F454-0B69-4A7B-83DE-945C5F5B068F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServoWeatherWeb", "ServoWeatherWeb\ServoWeatherWeb\ServoWeatherWeb.csproj", "{70DB3FCD-FDA4-42F4-B409-38A3D005CEE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServoWeatherWeb.Client", "ServoWeatherWeb\ServoWeatherWeb.Client\ServoWeatherWeb.Client.csproj", "{B2598A48-229E-40AB-9DBC-2855E7334826}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{2808F454-0B69-4A7B-83DE-945C5F5B068F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2808F454-0B69-4A7B-83DE-945C5F5B068F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2808F454-0B69-4A7B-83DE-945C5F5B068F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70DB3FCD-FDA4-42F4-B409-38A3D005CEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70DB3FCD-FDA4-42F4-B409-38A3D005CEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70DB3FCD-FDA4-42F4-B409-38A3D005CEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70DB3FCD-FDA4-42F4-B409-38A3D005CEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2598A48-229E-40AB-9DBC-2855E7334826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2598A48-229E-40AB-9DBC-2855E7334826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2598A48-229E-40AB-9DBC-2855E7334826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2598A48-229E-40AB-9DBC-2855E7334826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
