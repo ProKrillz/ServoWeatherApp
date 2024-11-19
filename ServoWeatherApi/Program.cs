@@ -1,4 +1,6 @@
 using InfluxDB3.Client;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Formatter;
@@ -6,6 +8,7 @@ using ServoWeatherDomain.API.InfluxDBRepositories;
 using ServoWeatherDomain.API.InfluxDBRepositories.Interfaces;
 using ServoWeatherDomain.API.MqttRepositories;
 using ServoWeatherDomain.API.MqttRepositories.Interfaces;
+using ServoWeatherDomain.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString)).AddLogging();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+                .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddCors(options => options.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
 IConfigurationSection broker = builder.Configuration.GetSection("BrokerHostSettings");
 IConfigurationSection influx = builder.Configuration.GetSection("InfluxDbSettings");
@@ -39,7 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapIdentityApi<IdentityUser>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
