@@ -1,33 +1,32 @@
 ﻿@using static MudBlazor.Components.Chart.Models.TimeSeriesChartSeries
 @inject ITelemetryService _service
-@* @rendermode InteractiveServer *@
+@rendermode InteractiveServer
 
-<h3>Temperature</h3>
-
+<h3>TelemetryComponent</h3>
 
 <div>
-    <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options"  CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(5)" />
+    <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options" CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(5)" />
     <MudGrid>
-         <MudItem xs="6">
+        <MudItem xs="6">
             <MudText Typo="Typo.body1" Class="py-3">Selected: @(Index < 0 ? "None" : _series[Index].Name)</MudText>
-        </MudItem> 
+        </MudItem>
         <MudItem xs="6">
             <MudSlider @bind-Value="_options.LineStrokeWidth" Min="1" Max="10" Color="Color.Info">Line Width: @_options.LineStrokeWidth.ToString()</MudSlider>
         </MudItem>
-    </MudGrid> 
+    </MudGrid>
 </div>
 
 @code {
     private int Index = -1;
-    private ChartOptions _options = new ()
-    {
-        YAxisLines = false,
-        YAxisTicks = 500,
-        MaxNumYAxisTicks = 10,
-        YAxisRequireZeroPoint = true,
-        XAxisLines = false,
-        LineStrokeWidth = 1,
-    };
+    private ChartOptions _options = new()
+        {
+            YAxisLines = false,
+            YAxisTicks = 500,
+            MaxNumYAxisTicks = 10,
+            YAxisRequireZeroPoint = true,
+            XAxisLines = false,
+            LineStrokeWidth = 1,
+        };
     private TimeSeriesChartSeries _temp = new();
     private TimeSeriesChartSeries _humidity = new();
 
@@ -39,7 +38,6 @@
     {
         await LoadData();
     }
-
 
     public async Task LoadData()
     {
@@ -53,7 +51,7 @@
 
         foreach (var item in models)
         {
-            if(item.Temperature > 10 && item.Humidity > 30)
+            if (item.Temperature > 10 && item.Humidity > 30)
             {
                 temp.Add(new TimeValue(item.LocalTime, item.Temperature));
                 humidity.Add(new TimeValue(item.LocalTime, item.Humidity));
@@ -61,24 +59,24 @@
         }
         _temp = new()
         {
-                Index = 0,
-                Name = "Temperature",
-                Data = temp,
-                IsVisible = true,
-                Type = TimeSeriesDiplayType.Line
+            Index = 0,
+            Name = "Temperature",
+            Data = temp,
+            IsVisible = true,
+            Type = TimeSeriesDiplayType.Line
         };
 
         _humidity = new()
-            {
-                Index = 0,
-                Name = "Humidity",
-                Data = humidity,
-                IsVisible = true,
-                Type = TimeSeriesDiplayType.Line
-            };
+        {
+            Index = 0,
+            Name = "Humidity",
+            Data = humidity,
+            IsVisible = true,
+            Type = TimeSeriesDiplayType.Line
+        };
 
         _series.Add(_temp);
         _series.Add(_humidity);
         StateHasChanged();
     }
-} 
+}
