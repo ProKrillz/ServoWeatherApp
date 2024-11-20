@@ -14,7 +14,7 @@ namespace ServoWeatherService.Services
         public async Task<List<Telemetry>> GetItemsAsync(string input)
         {
             UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{input}" };
-            return await _service.GetAsync<List<Telemetry>>(builder.Uri);
+            return await _service.GetAsync<List<Telemetry>>(builder.Uri) ?? [];
         }
 
         public async Task<Telemetry> GetItemByIdAsync(string id)
@@ -32,14 +32,14 @@ namespace ServoWeatherService.Services
             }
             else
             {
-                UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{item.Id}" };
+                UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{1}" };
                 await _service.PutAsync(builder.Uri, item);
             }
         }
 
         public async Task DeleteItemAsync(Telemetry item)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{item.Id}" };
+            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{1}" };
             bool result = await _service.DeleteAsync(builder.Uri);
         }
 
