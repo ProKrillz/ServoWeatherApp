@@ -3,6 +3,7 @@ using ServoWeatherDomain.GenericRepositories;
 using ServoWeatherService.Services;
 using ServoWeatherService.Services.Interfaces;
 using ServoWeatherWeb.Components;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
