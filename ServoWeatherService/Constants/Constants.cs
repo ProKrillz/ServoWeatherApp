@@ -13,8 +13,7 @@ namespace ServoWeatherService.Constants
         #region Thomas Tunnel
         
         //public static string BaseUrl = "https://4mcjs4n2-7260.euw.devtunnels.ms"; // Thomas
-
-        public static string BaseUrl = "https://localhost:7260/";
+        //public static string BaseUrl = "https://localhost:7260/";
 
         #endregion
         public static string Endpoint = "GetTelemtry";

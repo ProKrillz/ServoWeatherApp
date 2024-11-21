@@ -52,8 +52,9 @@ public class InfluxRepository(InfluxDBClient _influxDBClient) : IInfluxRepositor
                 var average = x.First();
                 average.Humidity = x.Average(y => y.Humidity);
                 average.Temperature = x.Average(y => y.Temperature);
+                average.LocalTime = new DateTime((long)x.Average(item => item.LocalTime.Ticks));
                 return average;
-            }).ToList();
+            }).Take(15).ToList();
         return list;
     }
 }
