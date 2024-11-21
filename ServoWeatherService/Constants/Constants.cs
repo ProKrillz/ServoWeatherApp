@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace ServoWeatherService.Constants
 {
@@ -17,6 +13,8 @@ namespace ServoWeatherService.Constants
         #region Thomas Tunnel
         
         //public static string BaseUrl = "https://4mcjs4n2-7260.euw.devtunnels.ms"; // Thomas
+
+        public static string BaseUrl = "https://localhost:7260/";
 
         #endregion
         public static string Endpoint = "GetTelemtry";
