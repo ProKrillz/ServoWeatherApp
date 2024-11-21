@@ -1,4 +1,5 @@
-﻿using InfluxDB3.Client;
+﻿using Google.Protobuf.WellKnownTypes;
+using InfluxDB3.Client;
 using InfluxDB3.Client.Write;
 using ServoWeatherDomain.API.Entities;
 using ServoWeatherDomain.API.InfluxDBRepositories.Interfaces;
@@ -44,7 +45,15 @@ public class InfluxRepository(InfluxDBClient _influxDBClient) : IInfluxRepositor
                 LocalTime = DateTime.Parse(row[2].ToString()).ToLocalTime(), // show in local time
             });
         }
+
+        list = list.GroupBy(x => x.LocalTime.ToString("yy/MM/dd HH/mm"))
+            .Select(x =>
+            {
+                var average = x.First();
+                average.Humidity = x.Average(y => y.Humidity);
+                average.Temperature = x.Average(y => y.Temperature);
+                return average;
+            }).ToList();
         return list;
     }
- 
 }

@@ -5,7 +5,7 @@
 <h3>TelemetryComponent</h3>
 
 <div>
-    <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options" CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(5)" />
+    <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options" CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(60)" />
     <MudGrid>
         <MudItem xs="6">
             <MudText Typo="Typo.body1" Class="py-3">Selected: @(Index < 0 ? "None" : _series[Index].Name)</MudText>
@@ -21,8 +21,7 @@
     private ChartOptions _options = new()
         {
             YAxisLines = false,
-            YAxisTicks = 500,
-            MaxNumYAxisTicks = 10,
+            YAxisTicks = 5,
             YAxisRequireZeroPoint = true,
             XAxisLines = false,
             LineStrokeWidth = 1,
