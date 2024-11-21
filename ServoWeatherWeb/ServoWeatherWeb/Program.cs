@@ -12,6 +12,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddCascadingAuthenticationState();
+
 builder.Services.AddMudServices();
 
 builder.Services.AddScoped<IUserService, UserService>();

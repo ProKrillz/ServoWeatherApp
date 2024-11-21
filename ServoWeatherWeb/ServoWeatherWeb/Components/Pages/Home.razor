@@ -1,4 +1,5 @@
-﻿@using MudBlazor.Components.Chart.Models
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using MudBlazor.Components.Chart.Models
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using Dialog
@@ -10,11 +11,13 @@
 @page "/"
 
 <PageTitle>Home</PageTitle>
+<AuthorizeView>
+        <NotAuthorized>
 
 <MudGrid Class="mt-10">
     <MudItem xs="0" sm="4">    </MudItem>
     <MudItem xs="12" sm="4">
-        <EditForm Model="@user" OnValidSubmit="OnValidSubmit">
+        <EditForm Context="UserLogin" Model="@user" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <MudCard Outlined="true">
                 <MudCardContent>
@@ -36,7 +39,11 @@
     </MudItem>
     <MudItem xs="0" sm="4">    </MudItem>
 </MudGrid>
-
+    </NotAuthorized>
+    <Authorized>
+        <p>Tillyke</p>
+    </Authorized>
+</AuthorizeView>
 <style>
     .pointer{
         cursor: pointer;

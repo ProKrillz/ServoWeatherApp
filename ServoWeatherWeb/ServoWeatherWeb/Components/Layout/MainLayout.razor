@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+
 @* Required *@
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -16,7 +17,6 @@
         <MudIconButton Icon="fas fa-solid fa-user" Color="Color.Inherit" Edge="Edge.End" />
         <MudIconButton Icon="fas fa-solid fa-arrow-right-from-bracket" Color="Color.Inherit" Edge="Edge.End" Class="ms-2" />
     </MudAppBar>
-
 
     <MudDrawer @bind-Open="@_open" Elevation="1" Variant="@DrawerVariant.Mini">
         <MudDrawerHeader>

@@ -9,6 +9,7 @@ namespace ServoWeatherService.Services;
 public class UserService : IUserService
 {
     private readonly HttpClient _httpClient;
+    
 
     public UserService()
     {
@@ -34,6 +35,7 @@ public class UserService : IUserService
     public async Task<LoginToken> UserLoginAsync(UserLogin user)
     {
         LoginToken loginToken = new();
+        
         var result = await _httpClient.PostAsJsonAsync(
             "login", new
             {
@@ -48,5 +50,6 @@ public class UserService : IUserService
         }
         else
             return loginToken;
+
     }
 }
