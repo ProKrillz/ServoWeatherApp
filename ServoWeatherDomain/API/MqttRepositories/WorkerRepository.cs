@@ -46,7 +46,6 @@ namespace ServoWeatherDomain.API.MqttRepositories
             _mqttClient.ApplicationMessageReceivedAsync += e =>
             {
                 Telemetry? found = JsonSerializer.Deserialize<Telemetry>(Encoding.Default.GetString(e.ApplicationMessage.PayloadSegment));
-                _logger.LogInformation("random");
                 _influxDBService.WriteTelemetry(found);
                 return Task.CompletedTask;
             };

@@ -6,14 +6,14 @@
 
 <div>
     <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options" CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(10)" />
-    <MudGrid>
+    @* <MudGrid>
         <MudItem xs="6">
             <MudText Typo="Typo.body1" Class="py-3">Selected: @(Index < 0 ? "None" : _series[Index].Name)</MudText>
         </MudItem>
         <MudItem xs="6">
             <MudSlider @bind-Value="_options.LineStrokeWidth" Min="1" Max="10" Color="Color.Info">Line Width: @_options.LineStrokeWidth.ToString()</MudSlider>
         </MudItem>
-    </MudGrid>
+    </MudGrid> *@
 </div>
 
 @code {

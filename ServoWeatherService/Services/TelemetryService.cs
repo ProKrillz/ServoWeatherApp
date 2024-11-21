@@ -51,9 +51,7 @@ namespace ServoWeatherService.Services
         {
             UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.EndpointServo}/{input}" };
             await _service.PostAsync(builder.Uri, input);
-
         }
-
         #endregion
     }
 }
