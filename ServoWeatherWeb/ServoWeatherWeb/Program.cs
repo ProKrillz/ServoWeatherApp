@@ -1,5 +1,9 @@
 using ServoWeatherWeb.Components;
 using MudBlazor.Services;
+using Microsoft.AspNetCore.Identity;
+using ServoWeatherService.Services;
+using ServoWeatherService.Services.Interfaces;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,14 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddMudServices();
+
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services
+    .AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddBearerToken();
+
+//builder.Services.AddApiAuthorization();
 
 var app = builder.Build();
 

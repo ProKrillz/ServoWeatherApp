@@ -1,12 +1,69 @@
 ﻿@using MudBlazor.Components.Chart.Models
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using Dialog
+@using ServoWeatherService.Models;
+@using ServoWeatherService.Services.Interfaces;
+@inject IUserService _userService;
+@inject IDialogService DialogService
 
 @page "/"
 
 <PageTitle>Home</PageTitle>
 
+<MudGrid Class="mt-10">
+    <MudItem xs="0" sm="4">    </MudItem>
+    <MudItem xs="12" sm="4">
+        <EditForm Model="@user" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudTextField Label="Email" Class="mt-3"
+                                  @bind-Value="user.Email" For="@(() => user.Email)" />
+                    <MudTextField Label="Password" Class="mt-3"
+                                  @bind-Value="user.Password" For="@(() => user.Password)" InputType="InputType.Password" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Class="ms-4" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Login</MudButton>
+                    <MudButton Class="ms-2" Variant="Variant.Filled" Color="Color.Primary" @onclick="OpenDialogAsync">Sign up</MudButton>
+                </MudCardActions>
+                    <div class="pointer">
 
+                    <MudText Class="ms-6 mb-4" Color="Color.Info"   >Forgot password</MudText>
+                    </div>
+            </MudCard>
+        </EditForm>
+    </MudItem>
+    <MudItem xs="0" sm="4">    </MudItem>
+</MudGrid>
 
+<style>
+    .pointer{
+        cursor: pointer;
+    }
+</style>
 
+@code {
+    UserLogin user = new();
+    
+    bool success;
+    
+    LoginToken loginToken = new();
 
+    private async Task OnValidSubmit(EditContext context)
+    {
+        loginToken = await _userService.UserLoginAsync(user);
+        if (success)
+        {
+            //go to page with graf
+        }
+        
+        StateHasChanged();
+    }
+    private Task OpenDialogAsync()
+    {
+        var options = new DialogOptions { MaxWidth = MaxWidth.Small, FullWidth = true, CloseOnEscapeKey = true };
 
- 
+        return DialogService.ShowAsync<SignUpDialog>("Sign up", options);
+    }
+}
