@@ -1,8 +1,9 @@
 ﻿@using static MudBlazor.Components.Chart.Models.TimeSeriesChartSeries
 @inject ITelemetryService _service
-@rendermode InteractiveServer
+
 
 <h3>TelemetryComponent</h3>
+@if(!loading){
 
 <div>
     <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options" CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(10)" />
@@ -15,6 +16,7 @@
         </MudItem>
     </MudGrid> *@
 </div>
+}
 
 @code {
     private int Index = -1;
@@ -33,12 +35,20 @@
 
     public List<TelemetryModel> models = [];
 
-    protected override async Task OnInitializedAsync()
+    private bool loading = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (!firstRender)
+        {
+            loading = false;
+            StateHasChanged();
+            return;
+        }
         await LoadData();
     }
 
-    public async Task LoadData()
+    private async Task LoadData()
     {
         foreach (var item in await _service.GetItemsAsync("All"))
         {

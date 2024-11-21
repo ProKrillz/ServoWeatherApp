@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using ServoWeatherDomain.GenericRepositories;
 using ServoWeatherService.Services;
 using ServoWeatherService.Services.Interfaces;
 using ServoWeatherWeb.Components;
-using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +13,11 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddMudServices();
 builder.Services.AddScoped<ITelemetryService, TelemetryService>();
 builder.Services.AddScoped<IGenericRepository, GenericRepository>();
+
+builder.Services.AddMudServices();
+
 
 var app = builder.Build();
 
@@ -34,6 +37,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()

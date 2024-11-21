@@ -1,5 +1,4 @@
 ﻿@inject ITelemetryService _service
-@rendermode InteractiveServer
 
 <h3>ServoMotorControl</h3>
 
@@ -9,7 +8,7 @@
 </div>
 
 @code {
-    public void ServoMotor(string input)
+    private void ServoMotor(string input)
     {
         _service.ServoMotor(input);
     }
