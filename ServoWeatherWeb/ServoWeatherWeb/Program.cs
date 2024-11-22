@@ -5,6 +5,14 @@ using ServoWeatherDomain.GenericRepositories;
 using ServoWeatherService.Services;
 using ServoWeatherService.Services.Interfaces;
 using ServoWeatherWeb.Components;
+using MudBlazor.Services;
+using Microsoft.AspNetCore.Identity;
+using ServoWeatherService.Services;
+using ServoWeatherService.Services.Interfaces;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Blazored.LocalStorage;
+using Microsoft.EntityFrameworkCore;
+using ServoWeatherDomain.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +21,35 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddScoped<ITelemetryService, TelemetryService>();
-builder.Services.AddScoped<IGenericRepository, GenericRepository>();
+
+var connectionString = builder.Configuration
+    .GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString)).AddLogging();
+
+builder.Services.AddIdentityCore<IdentityUser>()
+                .AddSignInManager()
+                .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddMudServices();
 
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("Read", x => x.RequireClaim("ReadAccess"));
+    option.AddPolicy("Write", x => x.RequireClaim("WriteAccess"));
+});
+
+builder.Services
+    .AddAuthentication(IdentityConstants.ApplicationScheme) //IdentityConstants.ApplicationScheme
+    .AddIdentityCookies();
+
+//builder.Services.AddApiAuthorization();
 
 var app = builder.Build();
 
@@ -36,6 +68,10 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseAuthentication(); // auth
+app.UseAuthorization();
+
 app.UseAntiforgery();
 
 

@@ -1,0 +1,59 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity;
+@using ServoWeatherService.Models;
+@using ServoWeatherService.Services.Interfaces;
+@inject IUserService _userService;
+@inject UserManager<IdentityUser> UserManager;
+
+<MudDialog >
+    <DialogContent>
+        <EditForm Model="@user" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+
+            <MudTextField Label="Email" Class="mt-3"
+                          @bind-Value="user.Email" For="@(() => user.Email)" />
+            <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                          @bind-Value="user.Password" For="@(() => user.Password)" InputType="InputType.Password" />
+            <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+                          @bind-Value="user.Password2" For="@(() => user.Password2)" InputType="InputType.Password" />
+
+            @if (!success)
+            {
+                <MudText Color="Color.Success">Error</MudText>
+            }
+
+            <div class="d-flex align-center justify-space-between mt-4">
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+
+            </div>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    bool success = true;
+
+    User user = new();
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        var result = await UserManager.CreateAsync(new IdentityUser() { Email = user.Email }, user.Password);
+
+        if (result.Succeeded)
+            MudDialog.Close(DialogResult.Ok(true));
+        
+        //success = await _userService.SaveUserAsync(user);
+
+
+
+        StateHasChanged();
+    }
+}
