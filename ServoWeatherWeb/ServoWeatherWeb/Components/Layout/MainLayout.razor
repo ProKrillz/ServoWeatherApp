@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
 
 @* Required *@
 <MudThemeProvider />
@@ -11,6 +12,8 @@
 <MudSnackbarProvider />
 
 <MudLayout>
+<AuthorizeView Context="MainLogin">
+        <Authorized>
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
         <MudSpacer />
@@ -24,13 +27,14 @@
         </MudDrawerHeader>
 
         <MudNavMenu Color="Color.Inherit">
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Store">Store</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks">Library</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Group">Community</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ShowChart">Graf</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Devices">Servo</MudNavLink>
         </MudNavMenu>
 
     </MudDrawer>
 
+        </Authorized>
+</AuthorizeView>
     <MudMainContent Class="pt-16 px-16">
         @Body
     </MudMainContent>

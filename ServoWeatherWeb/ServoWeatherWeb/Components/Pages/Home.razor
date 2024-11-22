@@ -11,6 +11,9 @@
 @inject IDialogService DialogService
 @inject SignInManager<IdentityUser> SignInManager;
 @inject AuthenticationStateProvider StateProvider;
+@inject NavigationManager Navigation;
+
+
 
 @page "/"
 
@@ -190,8 +193,8 @@
         var result = await SignInManager.PasswordSignInAsync(user.Email, user.Password, false, false);
         //loginToken = await _userService.UserLoginAsync(user);
         //await _localStorage.SetItemAsync("TokenOfDoom", loginToken);
+        Navigation.NavigateTo("/",true);
 
-        StateHasChanged();
     }
     private Task OpenDialogAsync()
     {
