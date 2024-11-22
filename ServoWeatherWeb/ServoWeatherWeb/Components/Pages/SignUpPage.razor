@@ -1,0 +1,52 @@
+﻿@page "/SignUp"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity;
+@using ServoWeatherService.Models;
+@using ServoWeatherService.Services.Interfaces;
+@using System.Security.Claims
+@inject IUserService _userService;
+@inject UserManager<IdentityUser> UserManager;
+@rendermode InteractiveServer
+
+<EditForm Model="@user" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+
+    <MudTextField Label="Email" Class="mt-3"
+                  @bind-Value="user.Email" For="@(() => user.Email)" />
+    <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                  @bind-Value="user.Password" For="@(() => user.Password)" InputType="InputType.Password" />
+    <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+                  @bind-Value="user.Password2" For="@(() => user.Password2)" InputType="InputType.Password" />
+
+    <MudCheckBox @bind-Value="user.Read">Read</MudCheckBox>
+    <MudCheckBox @bind-Value="user.Write">Write</MudCheckBox>
+
+    <div class="d-flex align-center justify-space-between mt-4">
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+    </div>
+</EditForm>
+
+@code {
+    bool success = true;
+
+    User user = new();
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        IdentityUser iUser = new() { Email = user.Email, UserName = user.Email };
+
+        var result = await UserManager.CreateAsync(iUser, user.Password);
+        if (user.Read)
+        {
+            await UserManager.AddClaimsAsync(iUser,[new Claim("ReadAccess", "Read")]); //for poly
+        }
+        if (user.Write)
+        {
+            await UserManager.AddClaimsAsync(iUser, [new Claim("WriteAccess", "Write")]);
+        }
+
+        StateHasChanged();
+    }
+}
+

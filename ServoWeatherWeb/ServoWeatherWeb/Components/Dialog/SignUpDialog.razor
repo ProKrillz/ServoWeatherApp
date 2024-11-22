@@ -3,6 +3,7 @@
 @using ServoWeatherService.Models;
 @using ServoWeatherService.Services.Interfaces;
 @inject IUserService _userService;
+@inject UserManager<IdentityUser> UserManager;
 
 <MudDialog >
     <DialogContent>
@@ -42,13 +43,15 @@
 
     User user = new();
 
-
     private async Task OnValidSubmit(EditContext context)
     {
-        success = await _userService.SaveUserAsync(user);
+        var result = await UserManager.CreateAsync(new IdentityUser() { Email = user.Email }, user.Password);
 
-        if (success)
+        if (result.Succeeded)
             MudDialog.Close(DialogResult.Ok(true));
+        
+        //success = await _userService.SaveUserAsync(user);
+
 
 
         StateHasChanged();
