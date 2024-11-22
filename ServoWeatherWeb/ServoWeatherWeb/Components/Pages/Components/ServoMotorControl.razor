@@ -1,15 +1,18 @@
 ﻿@inject ITelemetryService _service
 @using Microsoft.AspNetCore.Components.Authorization
-
-<h3>ServoMotorControl</h3>
+@page "/ServoMotorControl"
 
 <AuthorizeView Policy="Write">
     <Authorized>
+        <h3>ServoMotorControl</h3>
         <MudContainer>
             <MudButton Variant="Variant.Filled" @onclick='() => ServoMotor("on")' Color="Color.Primary">Turn On</MudButton>
             <MudButton Variant="Variant.Filled" @onclick='() => ServoMotor("off")' Color="Color.Primary">Turn Off</MudButton>
         </MudContainer>
     </Authorized>
+    <NotAuthorized>
+        <p>YOU DONT HAVE WRITE PERMISSIONS!!</p>
+    </NotAuthorized>
 </AuthorizeView>
 
 @code {

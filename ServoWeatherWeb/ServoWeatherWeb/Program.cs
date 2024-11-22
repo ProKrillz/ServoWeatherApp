@@ -36,8 +36,11 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddMudServices();
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITelemetryService, TelemetryService>();
+builder.Services.AddScoped<IGenericRepository, GenericRepository>();
 
 builder.Services.AddBlazoredLocalStorage();
+
 
 builder.Services.AddAuthorization(option =>
 {

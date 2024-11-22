@@ -2,27 +2,30 @@
 @using Microsoft.AspNetCore.Components.Authorization;
 @inject ITelemetryService _service
 @rendermode InteractiveServer
+@page "/TelemetryComponent"
 
 
-<h3>TelemetryComponent</h3>
 @if(!loading){
 
-<AuthorizeView Policy="Read">
-    <Authorized>
-
-        <MudContainer>
-            <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options" CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(10)" />
-            <MudGrid>
-                <MudItem xs="6">
-                    <MudText Typo="Typo.body1" Class="py-3">Selected: @(Index < 0 ? "None" : _series[Index].Name)</MudText>
-                </MudItem>
-                @* <MudItem xs="6">
-                    <MudSlider @bind-Value="_options.LineStrokeWidth" Min="1" Max="10" Color="Color.Info">Line Width: @_options.LineStrokeWidth.ToString()</MudSlider>
-                </MudItem> *@
-            </MudGrid>
-        </MudContainer>
-    </Authorized>
-</AuthorizeView>
+    <AuthorizeView Policy="Read">
+        <Authorized>
+            <h3>TelemetryComponent</h3>
+            <MudContainer>
+                <MudTimeSeriesChart ChartSeries="@_series" @bind-SelectedIndex="Index" Width="100%" Height="350px" ChartOptions="@_options" CanHideSeries TimeLabelSpacing="TimeSpan.FromMinutes(10)" />
+                <MudGrid>
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.body1" Class="py-3">Selected: @(Index < 0 ? "None" : _series[Index].Name)</MudText>
+                    </MudItem>
+                    @* <MudItem xs="6">
+                        <MudSlider @bind-Value="_options.LineStrokeWidth" Min="1" Max="10" Color="Color.Info">Line Width: @_options.LineStrokeWidth.ToString()</MudSlider>
+                    </MudItem> *@
+                </MudGrid>
+            </MudContainer>
+        <NotAuthorized>
+            <p>YOU DONT HAVE READ PERMISSIONS!!</p>
+        </NotAuthorized>
+        </Authorized>
+    </AuthorizeView>
 }
 
 @code {
