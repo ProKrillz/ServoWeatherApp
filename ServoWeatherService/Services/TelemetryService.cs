@@ -2,7 +2,6 @@
 using ServoWeatherDomain.GenericRepositories;
 using ServoWeatherService.Services.Interfaces;
 
-
 namespace ServoWeatherService.Services
 {
     public class TelemetryService(IGenericRepository _service) : ITelemetryService
@@ -13,13 +12,13 @@ namespace ServoWeatherService.Services
 
         public async Task<List<Telemetry>> GetItemsAsync(string input)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{input}" };
+            UriBuilder builder = new(Constants.BaseUrl) { Path = $"{Constants.Endpoint}/{input}" };
             return await _service.GetAsync<List<Telemetry>>(builder.Uri) ?? [];
         }
 
         public async Task<Telemetry> GetItemByIdAsync(string id)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{id}" };
+            UriBuilder builder = new(Constants.BaseUrl) { Path = $"{Constants.Endpoint}/{id}" };
             return await _service.GetAsync<Telemetry>(builder.Uri);
         }
 
@@ -27,19 +26,19 @@ namespace ServoWeatherService.Services
         {
             if (isNewItem)
             {
-                UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = Constants.Constants.Endpoint };
+                UriBuilder builder = new(Constants.BaseUrl) { Path = Constants.Endpoint };
                 await _service.PostAsync(builder.Uri, item);
             }
             else
             {
-                UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{1}" };
+                UriBuilder builder = new(Constants.BaseUrl) { Path = $"{Constants.Endpoint}/{1}" };
                 await _service.PutAsync(builder.Uri, item);
             }
         }
 
         public async Task DeleteItemAsync(Telemetry item)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.Endpoint}/{1}" };
+            UriBuilder builder = new(Constants.BaseUrl) { Path = $"{Constants.Endpoint}/{1}" };
             bool result = await _service.DeleteAsync(builder.Uri);
         }
 
@@ -49,7 +48,7 @@ namespace ServoWeatherService.Services
 
         public async Task ServoMotor(string input)
         {
-            UriBuilder builder = new(Constants.Constants.BaseUrl) { Path = $"{Constants.Constants.EndpointServo}/{input}" };
+            UriBuilder builder = new(Constants.BaseUrl) { Path = $"{Constants.EndpointServo}/{input}" };
             await _service.PostAsync(builder.Uri, input);
         }
         #endregion
